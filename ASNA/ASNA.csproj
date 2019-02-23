@@ -114,6 +114,9 @@
     <EmbeddedResource Include="usrcntrlSettings.resx">
       <DependentUpon>usrcntrlSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="BUILTPROJ\doc\Changelog.rtf" />
+    <None Include="BUILTPROJ\doc\Credits.rtf" />
+    <None Include="BUILTPROJ\doc\UserGuide.rtf" />
     <None Include="doc\Changelog.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -138,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asna-ICon-rev-1.ico" />
+    <Content Include="BUILTPROJ\ASNA.exe" />
+    <Content Include="BUILTPROJ\Renci.SshNet.dll" />
+    <Content Include="BUILTPROJ\WinSCPnet.dll" />
     <Content Include="Renci.SshNet.dll" />
     <Content Include="WinSCPnet.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
