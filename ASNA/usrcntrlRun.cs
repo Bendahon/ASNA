@@ -26,6 +26,10 @@ namespace ASNA
         }
         SshClient ssh;
         bool SkipICMPScan = true;
+        bool SkipStatusCMD = false;
+        bool SkipConfigCMD = false;
+        bool SkipSFTPCMD = false;
+        WinSCP.Session session;
 
         public void ReloadUserControl()
         {
@@ -51,11 +55,6 @@ namespace ASNA
                 lstboxSites.Items.Add(opfile);
                 }
             }
-        }
-
-        private void lstboxSites_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void cmboSaveLocation_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,7 +96,12 @@ namespace ASNA
         #region SSH Shit
         private void btnBackitup_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
 
+            if (SkipConfigCMD && SkipSFTPCMD && SkipStatusCMD)
+            {
+                return;
+            }
             string IPAddress = txtIPAddress.Text;
             // Check if any boxes are empty
             if (!PreFlightChecks())
@@ -162,29 +166,61 @@ namespace ASNA
             // Checked for existance before 
             Directory.CreateDirectory(OutputFolderName);
 
-            GoOverTheStatusCommands(StatusFile, OutputFolderName, monthdaystuff);
-            RunAllConfigCommands(ConfigCommand, ConfigCommandDir, OutputFolderName, monthdaystuff);
+            if (SkipStatusCMD)
+            {
+                WriteToLogBox("Skipping status commands!");
+            }
+            else
+            {
+                WriteToLogBox("Generating Status File");
+                GoOverTheStatusCommands(StatusFile, OutputFolderName, monthdaystuff);
+                WriteToLogBox("Status File Generated");
+            }
+            if (SkipConfigCMD)
+            {
+                WriteToLogBox("Skipping config commands!");
+            }
+            else
+            {
+                WriteToLogBox("Downloading Config of Log files");
+                RunAllConfigCommands(ConfigCommand, ConfigCommandDir, OutputFolderName, monthdaystuff);
+                WriteToLogBox("Config and Log Files download complete");
+            }
             DestroyTheConnection();
 
             // Now to do the SFTP commands
-            List<string> SFTPCommand = LoadSFTPDLFromXML(DOC);
-            List<string> SFTPOutputDirectory = LoadSFTPOPFromXML(DOC);
 
-            SessionOptions sessionOptions = new SessionOptions
+            if (SkipSFTPCMD)
             {
-                Protocol = Protocol.Sftp,
-                HostName = txtIPAddress.Text,
-                UserName = txtUsername.Text,
-                Password = txtPassword.Text,
-                PortNumber = Convert.ToInt32(txtPort.Text),
-                GiveUpSecurityAndAcceptAnySshHostKey = true
-            };
+                WriteToLogBox("Skipping SFTP due to settings!");
+            }
+            else
+            {
+                List<string> SFTPCommand = LoadSFTPDLFromXML(DOC);
+                List<string> SFTPOutputDirectory = LoadSFTPOPFromXML(DOC);
 
-            WriteToLogBox("Setting up SFTP!");
-            SFTPDownload(sessionOptions, OutputFolderName, SFTPCommand, SFTPOutputDirectory);
-            WriteToLogBox("Completed!");
+                SessionOptions sessionOptions = new SessionOptions
+                {
+                    Protocol = Protocol.Sftp,
+                    HostName = txtIPAddress.Text,
+                    UserName = txtUsername.Text,
+                    Password = txtPassword.Text,
+                    PortNumber = Convert.ToInt32(txtPort.Text),
+                    GiveUpSecurityAndAcceptAnySshHostKey = true
+                    
+                };
+                WriteToLogBox("Setting up SFTP!");
+                SFTPDownload(sessionOptions, OutputFolderName, SFTPCommand, SFTPOutputDirectory);
+                WriteToLogBox("Completed SFTP!");
+            }
+
+            watch.Stop();
+            var ElapsedSeconds = watch.ElapsedMilliseconds / 1000;
+
+            WriteToLogBox($"it took {ElapsedSeconds} seconds to run");
 
         }
+
         private bool PreFlightChecks()
         {
             if (txtActualSaveLocation.Text == "")
@@ -403,37 +439,10 @@ namespace ASNA
             }
             return status;
         }
-
-        private void GoOverTheSFTPCommands(List<string> SFTPDir, List<string> SFTPOutputDir, string OutputFolderName, string dateRN)
-        {
-            for (int x = 0; x < SFTPDir.Count; x++)
-            {
-                string DownloadThisDirectory = SFTPDir[x];
-                string SaveToHere = $@"{OutputFolderName}{SFTPOutputDir[x]}";
-
-               
-                ////Extract the file name
-                //string OPFileName = new DirectoryInfo(ConfigDir1).Name;
-                //string DirectoryStructure = $@"{OutputFolderName}\{ConfigDir1}".Replace(OPFileName, "");
-                //string FinalOutputName = $@"{DirectoryStructure}\{txtServerName.Text} {dateRN} {OPFileName}";
-
-                //if (!Directory.Exists(DirectoryStructure))
-                //{
-                //    Directory.CreateDirectory(DirectoryStructure);
-                //}
-
-                //StreamWriter sw = new StreamWriter(FinalOutputName);
-                //sw.Write(FinalResult);
-                //sw.Close();
-
-            }
-        }
-        WinSCP.Session session;
         private void SFTPDownload(SessionOptions so, string OPFolderName, List<string> IPDir, List<string> OPdir)
         {
             try
             {
-
                 session = new WinSCP.Session();
                 session.Open(so);
                 for(int i = 0; i < IPDir.Count; i++)
@@ -483,8 +492,8 @@ namespace ASNA
         #region Logbox info
         private void WriteToLogBox(string inputtext)
         {
-            string DateTimeFileName = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
-            string StartMessage = $"{DateTimeFileName} -- ASNA: ";
+            string DateTimeFileName = DateTime.Now.ToString("dd-MMM-yyyy_HH-mm-ss");
+            string StartMessage = $"[{DateTimeFileName}] -- ASNA: ";
             string EndMessage = "\n";
             txtLogBox.AppendText($"{StartMessage}{inputtext}{EndMessage}");
             txtLogBox.ScrollToCaret();
@@ -517,6 +526,10 @@ namespace ASNA
             txtUsername.Text = se.Username;
             txtPort.Text = se.Port;
             SkipICMPScan = se.SkipICMPScan;
+            SkipStatusCMD = se.SkipStatus;
+            SkipSFTPCMD = se.SkipSFTP;
+            SkipConfigCMD = se.SkipConfig;
+
         }
     }
 }

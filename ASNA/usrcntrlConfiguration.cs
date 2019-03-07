@@ -189,9 +189,9 @@ namespace ASNA
                         }
 
                     }
-                    catch(Exception EX)
+                    catch
                     {
-                        //MessageBox.Show(EX.Message);
+
                     }
                     count += 0.5;
                 }
@@ -216,9 +216,9 @@ namespace ASNA
                         }
 
                     }
-                    catch (Exception EX)
+                    catch
                     {
-                        //MessageBox.Show(EX.Message);
+
                     }
                     count += 0.5;
                 }

@@ -50,6 +50,14 @@
             this.btnRename = new System.Windows.Forms.Button();
             this.txtPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chckSkipStatus = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chckSkipConfig = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chckSkipSFTP = new System.Windows.Forms.CheckBox();
+            this.lblSFTPWarning = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblDefaultUsername
@@ -259,10 +267,94 @@
             this.label1.TabIndex = 29;
             this.label1.Text = "Port";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(22, 227);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "Skip Status";
+            // 
+            // chckSkipStatus
+            // 
+            this.chckSkipStatus.AutoSize = true;
+            this.chckSkipStatus.Location = new System.Drawing.Point(122, 227);
+            this.chckSkipStatus.Name = "chckSkipStatus";
+            this.chckSkipStatus.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipStatus.TabIndex = 30;
+            this.chckSkipStatus.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(23, 250);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 33;
+            this.label5.Text = "Skip config";
+            // 
+            // chckSkipConfig
+            // 
+            this.chckSkipConfig.AutoSize = true;
+            this.chckSkipConfig.Location = new System.Drawing.Point(123, 250);
+            this.chckSkipConfig.Name = "chckSkipConfig";
+            this.chckSkipConfig.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipConfig.TabIndex = 32;
+            this.chckSkipConfig.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 312);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 13);
+            this.label6.TabIndex = 35;
+            this.label6.Text = "Skip SFTP";
+            // 
+            // chckSkipSFTP
+            // 
+            this.chckSkipSFTP.AutoSize = true;
+            this.chckSkipSFTP.Location = new System.Drawing.Point(123, 312);
+            this.chckSkipSFTP.Name = "chckSkipSFTP";
+            this.chckSkipSFTP.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipSFTP.TabIndex = 34;
+            this.chckSkipSFTP.UseVisualStyleBackColor = true;
+            // 
+            // lblSFTPWarning
+            // 
+            this.lblSFTPWarning.AutoSize = true;
+            this.lblSFTPWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSFTPWarning.Location = new System.Drawing.Point(22, 273);
+            this.lblSFTPWarning.Name = "lblSFTPWarning";
+            this.lblSFTPWarning.Size = new System.Drawing.Size(641, 36);
+            this.lblSFTPWarning.TabIndex = 36;
+            this.lblSFTPWarning.Text = "WARNING: SFTP using WinSCP has shown to have increased RAM usage well after disco" +
+    "nnect\r\nSee documentation for more info";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(23, 329);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(641, 36);
+            this.label7.TabIndex = 37;
+            this.label7.Text = "WARNING: SFTP using WinSCP has shown to have increased RAM usage well after disco" +
+    "nnect\r\nSee documentation for more info";
+            // 
             // usrcntrlSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblSFTPWarning);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.chckSkipSFTP);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.chckSkipConfig);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.chckSkipStatus);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRename);
@@ -318,5 +410,13 @@
         private System.Windows.Forms.Button btnRename;
         private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chckSkipStatus;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chckSkipConfig;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chckSkipSFTP;
+        private System.Windows.Forms.Label lblSFTPWarning;
+        private System.Windows.Forms.Label label7;
     }
 }

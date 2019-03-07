@@ -11,6 +11,9 @@ namespace ASNA
         public string Port { get; set; }
         public string GenericName { get; set; }
         public bool SkipICMPScan { get; set; }
+        public bool SkipStatus { get; set; }
+        public bool SkipConfig { get; set; }
+        public bool SkipSFTP { get; set; }
 
         public static void SaveData(object obj, string filename)
         {

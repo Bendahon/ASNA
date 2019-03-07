@@ -24,7 +24,7 @@ namespace ASNA
         }
         public static string PVersion()
         {
-            return "1.1.3";
+            return "1.1.4";
         }
         public static string PNameAndVersion()
         {
@@ -77,6 +77,7 @@ namespace ASNA
                     {
                         System.IO.File.Copy(GettingEXERunningDirectory(), PIDbin() + "ASNA.exe", true);
                         System.IO.File.Copy(GettingRenciFileName(), PIDbin() + RenciSSHFileName, true);
+                        System.IO.File.Copy(GettingWinSCPFileName(), PIDbin() + WinSCPFName, true);
                     }
                     catch
                     {
@@ -184,16 +185,13 @@ namespace ASNA
                 StreamWriter sw = new StreamWriter(PIDdoc() + "DefaultSite");
                 sw.Write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
                 sw.Write("<dataset>\n");
-                sw.Write("\t<StatusCmd>\n");
-                sw.Write("\t\t<Status>echo test</Status>\n");
-                sw.Write("\t</StatusCmd>\n");
                 sw.Write("\t<ConfigCmd>\n");
                 sw.Write("\t\t<Command>cat /etc/groups</Command>\n");
                 sw.Write("\t\t<OutputFile>/groups.txt</OutputFile>\n");
                 sw.Write("\t</ConfigCmd>\n");
                 sw.Write("\t<SFTPCommand>\n");
-                sw.Write("\t\t<DownloadDirectory>/home</DownloadDirectory>\n");
-                sw.Write("\t\t<OutputDirectory>/tes</OutputDirectory>\n");
+                sw.Write("\t\t<DownloadDirectory>/i/am/a/test/directory</DownloadDirectory>\n");
+                sw.Write("\t\t<OutputDirectory>/i/am/an/output/directory</OutputDirectory>\n");
                 sw.Write("\t</SFTPCommand>\n");
                 sw.Write("</dataset>");
                 sw.Close();
@@ -205,16 +203,13 @@ namespace ASNA
                     StreamWriter sw = new StreamWriter(PIDdoc() + "DefaultSite");
                     sw.Write("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
                     sw.Write("<dataset>\n");
-                    sw.Write("\t<StatusCmd>\n");
-                    sw.Write("\t\t<Status>echo test</Status>\n");
-                    sw.Write("\t</StatusCmd>\n");
                     sw.Write("\t<ConfigCmd>\n");
                     sw.Write("\t\t<Command>cat /etc/groups</Command>\n");
                     sw.Write("\t\t<OutputFile>/groups.txt</OutputFile>\n");
                     sw.Write("\t</ConfigCmd>\n");
                     sw.Write("\t<SFTPCommand>\n");
-                    sw.Write("\t\t<DownloadDirectory>/home</DownloadDirectory>\n");
-                    sw.Write("\t\t<OutputDirectory>/tes</OutputDirectory>\n");
+                    sw.Write("\t\t<DownloadDirectory>/i/am/a/test/directory</DownloadDirectory>\n");
+                    sw.Write("\t\t<OutputDirectory>/i/am/an/output/directory</OutputDirectory>\n");
                     sw.Write("\t</SFTPCommand>\n");
                     sw.Write("</dataset>");
                     sw.Close();

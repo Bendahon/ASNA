@@ -68,7 +68,6 @@
             this.lstboxSites.Size = new System.Drawing.Size(250, 706);
             this.lstboxSites.TabIndex = 7;
             this.lstboxSites.TabStop = false;
-            this.lstboxSites.SelectedIndexChanged += new System.EventHandler(this.lstboxSites_SelectedIndexChanged);
             // 
             // txtServerName
             // 

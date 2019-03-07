@@ -21,6 +21,7 @@ namespace ASNA
             }
         }
         bool CurrentSaveState = false;
+        string SiteName = "";
 
         public void ReloadUserControl()
         {
@@ -39,16 +40,18 @@ namespace ASNA
             {
                 return;
             }
-            string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-            XmlSerializer xs = new XmlSerializer(typeof(Settings));
-            FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            Settings se = (Settings)xs.Deserialize(read);
-            read.Dispose();
-            txtDefaultIP.Text = se.HostIP;
-            txtUsername.Text = se.Username;
-            txtPassword.Text = se.Password;
-            txtSiteName.Text = se.GenericName;
-            chckEnableICMP.Checked = se.SkipICMPScan;
+            SiteName = cmboSiteName.Text; 
+            // legacy code, dont think i need
+            //string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
+            //XmlSerializer xs = new XmlSerializer(typeof(Settings));
+            //FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            //Settings se = (Settings)xs.Deserialize(read);
+            //read.Dispose();
+            //txtDefaultIP.Text = se.HostIP;
+            //txtUsername.Text = se.Username;
+            //txtPassword.Text = se.Password;
+            //txtSiteName.Text = se.GenericName;
+            //chckEnableICMP.Checked = se.SkipICMPScan;
         }
 
         private void usrcntrlSettings_Load(object sender, EventArgs e)
@@ -61,7 +64,7 @@ namespace ASNA
             SaveCurrentState();
         }
 
-        public void SaveCurrentState()
+        public void SaveCurrentState(string ExistingSiteName = "")
         {
             string FileName;
             if(cmboSiteName.Text == "")
@@ -69,6 +72,10 @@ namespace ASNA
                 string DateTimeFileName = DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss");
                 FileName = $@"{Program.PIDConfig()}{DateTimeFileName}";
                 MessageBox.Show($"Creating new file: {FileName}");
+            }
+            else if (!string.IsNullOrWhiteSpace(ExistingSiteName))
+            {
+                FileName = $@"{Program.PIDConfig()}{ExistingSiteName}";
             }
             else
             {
@@ -88,10 +95,13 @@ namespace ASNA
                 se.Port = txtPort.Text;
             }
             se.SkipICMPScan = chckEnableICMP.Checked;
+            se.SkipStatus = chckSkipStatus.Checked;
+            se.SkipConfig = chckSkipConfig.Checked;
+            se.SkipSFTP = chckSkipSFTP.Checked;
             Settings.SaveData(se, FileName);
             CurrentSaveState = false;
             MessageBox.Show("Saved!", Program.PNAme());
-
+            ReloadUserControl();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -115,12 +125,23 @@ namespace ASNA
             se.Password = "";
             se.Username = "";
             se.Port = "22";
+            se.SkipSFTP = true;
             Settings.SaveData(se, FileName);
             ReloadUserControl();
         }
 
         private void cmboSiteName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (GetCurrentSaveState())
+            {
+                DialogResult dr = MessageBox.Show("Save File?", Program.PNAme(), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(dr == DialogResult.Yes)
+                {
+                    SaveCurrentState(SiteName);
+                }
+            }
+            SiteName = cmboSiteName.Text;
+            TurnOffDatSaveState();
             string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
             XmlSerializer xs = new XmlSerializer(typeof(Settings));
             FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -131,8 +152,11 @@ namespace ASNA
             txtPassword.Text = se.Password;
             txtSiteName.Text = se.GenericName;
             txtPort.Text = se.Port;
+            chckSkipStatus.Checked = se.SkipStatus;
+            chckSkipConfig.Checked = se.SkipConfig;
+            chckSkipSFTP.Checked = se.SkipSFTP;
             chckEnableICMP.Checked = se.SkipICMPScan;
-
+            TurnOffDatSaveState();
         }
 
         private void btnRename_Click(object sender, EventArgs e)
