@@ -24,6 +24,10 @@ namespace ASNA
         }
         bool CurrentActiveSite = false;
         bool ChangesToMake = false;
+
+        string onesplitter = "-------------------1-------------------";
+        string twosplitter = "-------------------2-------------------";
+
         public void ReloadUserControl()
         {
             lstboxSites.Items.Clear();
@@ -49,6 +53,7 @@ namespace ASNA
             ChangesToMake = false;
             CurrentActiveSite = false;
 
+            btnExport.Enabled = false;
             btnSave.Enabled = false;
             btnAddCommand.Enabled = false;
             btnAddNewline.Enabled = false;
@@ -108,6 +113,7 @@ namespace ASNA
             ColourMeTimbers();
             ChangesToMake = false;
 
+            btnExport.Enabled = true;
             btnSave.Enabled = true;
             btnAddCommand.Enabled = true;
             btnAddNewline.Enabled = true;
@@ -147,6 +153,7 @@ namespace ASNA
                 filePath = "";
                 StatusFilePath = "";
                 MessageBox.Show("You need to add a new site first!");
+                return;
             }
             else
             {
@@ -157,17 +164,11 @@ namespace ASNA
             DataSet dsSFTP = (DataSet)dgridSFTP.DataSource;
             dsSystem.WriteXml(filePath);
             dsSFTP.WriteXml(filePath);
-            if (string.IsNullOrWhiteSpace(txtStatusBox.Text))
-            {
 
-            }
-            else
-            {
-                StreamWriter sw = new StreamWriter(StatusFilePath);
-                sw.Write(txtStatusBox.Text);
-                sw.Close();
-                sw.Dispose();
-            }
+            StreamWriter sw = new StreamWriter(StatusFilePath);
+            sw.Write(txtStatusBox.Text);
+            sw.Close();
+            sw.Dispose();
             MessageBox.Show("Saved!", Program.PNAme());
             ReloadUserControl();
         }
@@ -283,6 +284,11 @@ namespace ASNA
             {
                 return;
             }
+            if (txtRenameBox.Text.StartsWith("."))
+            {
+                MessageBox.Show("File can't start with a FULLSTOP");
+                return;
+            }
             string OriginalFileName = Program.PIDsites() + lstboxSites.Text;
             string OriginalHiddenFileName = Program.PIDsites() + "." + lstboxSites.Text;
             if (!File.Exists(OriginalFileName))
@@ -322,7 +328,6 @@ namespace ASNA
             }
             ReloadUserControl();
         }
-
         public static bool IsValidFileName(string expression, bool platformIndependent)
         {
             string sPattern = @"^(?!^(PRN|AUX|CLOCK\$|NUL|CON|COM\d|LPT\d|\..*)(\..+)?$)[^\x00-\x1f\\?*:\"";|/]+$";
@@ -332,7 +337,6 @@ namespace ASNA
             }
             return (Regex.IsMatch(expression, sPattern, RegexOptions.CultureInvariant));
         }
-
         private void btnAddNewline_Click(object sender, EventArgs e)
         {
             txtStatusBox.Text = txtStatusBox.Text.Insert(txtStatusBox.SelectionStart, "ASNAnewline \n");
@@ -418,5 +422,68 @@ namespace ASNA
         }
         #endregion
 
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            if (!ParseTheSystemDataGrids())
+            {
+                return;
+            }
+            if (!ParseTheSFTPDataGrids())
+            {
+                return;
+            }
+
+            List<string> StatusCommands = new List<string>();
+            if(txtStatusBox.TextLength > 1)
+            {
+                foreach(string line in txtStatusBox.Text.Split('\n'))
+                {
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        continue;
+                    }
+                    StatusCommands.Add(line);
+                }
+            }
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            string OutputFile;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                OutputFile = $@"{fbd.SelectedPath}\{lstboxSites.Text}.ASNA";
+            }
+            else
+            {
+                return;
+            }
+            fbd.Dispose();
+
+            DataTable dtStatus = DynamicToDT(StatusCommands);
+            DataSet dsSystem = (DataSet)dgridSystem.DataSource;
+            DataSet dsSFTP = (DataSet)dgridSFTP.DataSource;
+
+            StreamWriter sw = new StreamWriter(OutputFile);
+
+            dtStatus.WriteXml(sw);
+            sw.Write(onesplitter);
+            dsSystem.WriteXml(sw);
+            sw.Write(twosplitter);
+            dsSFTP.WriteXml(sw);
+            sw.Close();
+            MessageBox.Show("Exported!", Program.PNAme());
+            MessageBox.Show("Exported!", Program.PNAme());
+        }
+
+        public static DataTable DynamicToDT(List<string> objects)
+        {
+            DataTable dt = new DataTable("StatusCMD");
+            dt.Columns.Add("Status", typeof(string));
+            foreach(string line in objects)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Status"] = line;
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
     }
 }

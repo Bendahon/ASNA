@@ -141,7 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asna-ICon-rev-1.ico" />
-    <Content Include="BUILTPROJ\ASNA.exe" />
     <Content Include="BUILTPROJ\Renci.SshNet.dll" />
     <Content Include="BUILTPROJ\WinSCPnet.dll" />
     <Content Include="Renci.SshNet.dll" />

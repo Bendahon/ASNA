@@ -41,6 +41,8 @@
             this.btnAddNewline = new System.Windows.Forms.Button();
             this.btnAddCommand = new System.Windows.Forms.Button();
             this.txtStatusBox = new System.Windows.Forms.RichTextBox();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgridSystem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgridSFTP)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +127,7 @@
             // lblRename
             // 
             this.lblRename.AutoSize = true;
-            this.lblRename.Location = new System.Drawing.Point(537, 599);
+            this.lblRename.Location = new System.Drawing.Point(253, 601);
             this.lblRename.Name = "lblRename";
             this.lblRename.Size = new System.Drawing.Size(47, 13);
             this.lblRename.TabIndex = 8;
@@ -133,7 +135,7 @@
             // 
             // txtRenameBox
             // 
-            this.txtRenameBox.Location = new System.Drawing.Point(540, 617);
+            this.txtRenameBox.Location = new System.Drawing.Point(256, 619);
             this.txtRenameBox.MaxLength = 60;
             this.txtRenameBox.Name = "txtRenameBox";
             this.txtRenameBox.Size = new System.Drawing.Size(278, 20);
@@ -142,7 +144,7 @@
             // 
             // btnRenameOK
             // 
-            this.btnRenameOK.Location = new System.Drawing.Point(824, 613);
+            this.btnRenameOK.Location = new System.Drawing.Point(540, 618);
             this.btnRenameOK.Name = "btnRenameOK";
             this.btnRenameOK.Size = new System.Drawing.Size(52, 20);
             this.btnRenameOK.TabIndex = 10;
@@ -182,10 +184,35 @@
             this.txtStatusBox.Text = "";
             this.txtStatusBox.TextChanged += new System.EventHandler(this.txtStatusBox_TextChanged_1);
             // 
+            // btnExport
+            // 
+            this.btnExport.Enabled = false;
+            this.btnExport.Location = new System.Drawing.Point(682, 652);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(109, 51);
+            this.btnExport.TabIndex = 17;
+            this.btnExport.TabStop = false;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Enabled = false;
+            this.btnImport.Location = new System.Drawing.Point(682, 595);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(109, 51);
+            this.btnImport.TabIndex = 18;
+            this.btnImport.TabStop = false;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            // 
             // usrcntrlConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnImport);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.txtStatusBox);
             this.Controls.Add(this.btnAddCommand);
             this.Controls.Add(this.btnAddNewline);
@@ -224,5 +251,7 @@
         private System.Windows.Forms.Button btnAddNewline;
         private System.Windows.Forms.Button btnAddCommand;
         private System.Windows.Forms.RichTextBox txtStatusBox;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
     }
 }
