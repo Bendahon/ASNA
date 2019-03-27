@@ -504,6 +504,8 @@ namespace ASNA
             txtLogBox.Text = "";
         }
         #endregion
+
+
         private void cmboSavedSite_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(cmboSavedSite.Text == "None")
@@ -521,7 +523,15 @@ namespace ASNA
             Settings se = (Settings)xs.Deserialize(read);
             read.Dispose();
             txtIPAddress.Text = se.HostIP;
-            txtPassword.Text = se.Password;
+            if(se.isPWEncrypted == false)
+            {
+                txtPassword.Text = se.Password;
+            }
+            else
+            {
+                PasswordManager pm = new PasswordManager();
+                txtPassword.Text = pm.DecodeString(se.Password);
+            }
             txtServerName.Text = se.GenericName;
             txtUsername.Text = se.Username;
             txtPort.Text = se.Port;

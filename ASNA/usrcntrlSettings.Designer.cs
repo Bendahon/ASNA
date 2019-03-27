@@ -36,7 +36,6 @@
             this.lblPasswordField = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lblNoteAboutPasswords = new System.Windows.Forms.Label();
             this.txtSiteName = new System.Windows.Forms.TextBox();
             this.lblSiteName = new System.Windows.Forms.Label();
             this.chckEnableICMP = new System.Windows.Forms.CheckBox();
@@ -135,16 +134,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // lblNoteAboutPasswords
-            // 
-            this.lblNoteAboutPasswords.AutoSize = true;
-            this.lblNoteAboutPasswords.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNoteAboutPasswords.Location = new System.Drawing.Point(384, 125);
-            this.lblNoteAboutPasswords.Name = "lblNoteAboutPasswords";
-            this.lblNoteAboutPasswords.Size = new System.Drawing.Size(270, 18);
-            this.lblNoteAboutPasswords.TabIndex = 14;
-            this.lblNoteAboutPasswords.Text = "Note: Passwords are stored in plain text";
             // 
             // txtSiteName
             // 
@@ -368,7 +357,6 @@
             this.Controls.Add(this.chckEnableICMP);
             this.Controls.Add(this.txtSiteName);
             this.Controls.Add(this.lblSiteName);
-            this.Controls.Add(this.lblNoteAboutPasswords);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtPassword);
@@ -396,7 +384,6 @@
         private System.Windows.Forms.Label lblPasswordField;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lblNoteAboutPasswords;
         private System.Windows.Forms.TextBox txtSiteName;
         private System.Windows.Forms.Label lblSiteName;
         private System.Windows.Forms.CheckBox chckEnableICMP;

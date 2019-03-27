@@ -14,6 +14,7 @@ namespace ASNA
         public bool SkipStatus { get; set; }
         public bool SkipConfig { get; set; }
         public bool SkipSFTP { get; set; }
+        public bool isPWEncrypted { get; set; }
 
         public static void SaveData(object obj, string filename)
         {

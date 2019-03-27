@@ -198,7 +198,6 @@
             // 
             // btnImport
             // 
-            this.btnImport.Enabled = false;
             this.btnImport.Location = new System.Drawing.Point(682, 595);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(109, 51);
@@ -206,6 +205,7 @@
             this.btnImport.TabStop = false;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // usrcntrlConfiguration
             // 

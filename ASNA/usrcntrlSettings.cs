@@ -41,22 +41,12 @@ namespace ASNA
                 return;
             }
             SiteName = cmboSiteName.Text; 
-            // legacy code, dont think i need
-            //string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-            //XmlSerializer xs = new XmlSerializer(typeof(Settings));
-            //FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            //Settings se = (Settings)xs.Deserialize(read);
-            //read.Dispose();
-            //txtDefaultIP.Text = se.HostIP;
-            //txtUsername.Text = se.Username;
-            //txtPassword.Text = se.Password;
-            //txtSiteName.Text = se.GenericName;
-            //chckEnableICMP.Checked = se.SkipICMPScan;
         }
 
         private void usrcntrlSettings_Load(object sender, EventArgs e)
         {
-            ReloadUserControl();
+            // think this is redundant
+            //ReloadUserControl();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -82,9 +72,11 @@ namespace ASNA
                 FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
             }
             Settings se = new Settings();
+            PasswordManager pm = new PasswordManager();
+            se.isPWEncrypted = true;
             se.HostIP = txtDefaultIP.Text;
             se.Username = txtUsername.Text;
-            se.Password = txtPassword.Text;
+            se.Password = pm.EncodeString(txtPassword.Text);
             se.GenericName = txtSiteName.Text;
             if (string.IsNullOrWhiteSpace(txtPort.Text))
             {
@@ -103,7 +95,6 @@ namespace ASNA
             MessageBox.Show("Saved!", Program.PNAme());
             ReloadUserControl();
         }
-
         private void btnCancel_Click(object sender, EventArgs e)
         {
             ReloadUserControl();
@@ -126,6 +117,7 @@ namespace ASNA
             se.Username = "";
             se.Port = "22";
             se.SkipSFTP = true;
+            se.isPWEncrypted = true;
             Settings.SaveData(se, FileName);
             ReloadUserControl();
         }
@@ -140,23 +132,39 @@ namespace ASNA
                     SaveCurrentState(SiteName);
                 }
             }
-            SiteName = cmboSiteName.Text;
-            TurnOffDatSaveState();
-            string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-            XmlSerializer xs = new XmlSerializer(typeof(Settings));
-            FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            Settings se = (Settings)xs.Deserialize(read);
-            read.Dispose();
-            txtDefaultIP.Text = se.HostIP;
-            txtUsername.Text = se.Username;
-            txtPassword.Text = se.Password;
-            txtSiteName.Text = se.GenericName;
-            txtPort.Text = se.Port;
-            chckSkipStatus.Checked = se.SkipStatus;
-            chckSkipConfig.Checked = se.SkipConfig;
-            chckSkipSFTP.Checked = se.SkipSFTP;
-            chckEnableICMP.Checked = se.SkipICMPScan;
-            TurnOffDatSaveState();
+            try
+            {
+                SiteName = cmboSiteName.Text;
+                TurnOffDatSaveState();
+                string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
+                XmlSerializer xs = new XmlSerializer(typeof(Settings));
+                FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                Settings se = (Settings)xs.Deserialize(read);
+                if(se.isPWEncrypted == false)
+                {
+                    txtPassword.Text = se.Password;
+                }
+                else
+                {
+                    PasswordManager pm = new PasswordManager();
+                    txtPassword.Text = pm.DecodeString(se.Password);
+                }
+                read.Dispose();
+                txtDefaultIP.Text = se.HostIP;
+                txtUsername.Text = se.Username;
+                txtSiteName.Text = se.GenericName;
+                txtPort.Text = se.Port;
+                chckSkipStatus.Checked = se.SkipStatus;
+                chckSkipConfig.Checked = se.SkipConfig;
+                chckSkipSFTP.Checked = se.SkipSFTP;
+                chckEnableICMP.Checked = se.SkipICMPScan;
+                TurnOffDatSaveState();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return;
+            }
         }
 
         private void btnRename_Click(object sender, EventArgs e)

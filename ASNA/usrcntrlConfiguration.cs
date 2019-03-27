@@ -26,7 +26,7 @@ namespace ASNA
         bool ChangesToMake = false;
 
         string onesplitter = "-------------------1-------------------";
-        string twosplitter = "-------------------2-------------------";
+        //string twosplitter = "-------------------2-------------------";
 
         public void ReloadUserControl()
         {
@@ -459,17 +459,13 @@ namespace ASNA
 
             DataTable dtStatus = DynamicToDT(StatusCommands);
             DataSet dsSystem = (DataSet)dgridSystem.DataSource;
-            DataSet dsSFTP = (DataSet)dgridSFTP.DataSource;
-
+            //DataSet dsSFTP = (DataSet)dgridSFTP.DataSource;
             StreamWriter sw = new StreamWriter(OutputFile);
 
             dtStatus.WriteXml(sw);
             sw.Write(onesplitter);
             dsSystem.WriteXml(sw);
-            sw.Write(twosplitter);
-            dsSFTP.WriteXml(sw);
             sw.Close();
-            MessageBox.Show("Exported!", Program.PNAme());
             MessageBox.Show("Exported!", Program.PNAme());
         }
 
@@ -484,6 +480,75 @@ namespace ASNA
                 dt.Rows.Add(dr);
             }
             return dt;
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            // messy as fuck i know
+            string filename;
+            OpenFileDialog dlgOpen = new OpenFileDialog();
+            dlgOpen.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            dlgOpen.Filter = "ASNA Project Files|*.ASNA";
+            dlgOpen.FilterIndex = 1;
+            dlgOpen.ShowDialog();
+            filename = dlgOpen.FileName;
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show("Failed to find file exists");
+                return;
+            }
+
+            StreamReader sr = new StreamReader(filename);
+            string WholeFile = sr.ReadToEnd();
+            sr.Close();
+            sr.Dispose();
+            if(!WholeFile.Contains(onesplitter))
+            {
+                MessageBox.Show("Invalid file! :(", Program.PNAme());
+                return;
+            }
+            string[] myfirsttmp = WholeFile.Split(new [] { onesplitter }, StringSplitOptions.None);
+            if(myfirsttmp.Length != 2)
+            {
+                MessageBox.Show("Invalid file! :(", Program.PNAme());
+                return;
+            }
+
+            string StatusCommand = myfirsttmp[0];
+            // now the other two
+            string ConfigAndSFTP = myfirsttmp[1];
+            // this is now a complete file
+
+            // now to check the file can be imported
+            string ImportFileName;
+            string HiddenImportFileName;
+            ImportFileName = Program.PIDsites() + Path.GetFileName(filename.Replace(".ASNA", ""));
+            HiddenImportFileName = Program.PIDsites() + "." + Path.GetFileName(filename.Replace(".ASNA", ""));
+            if (File.Exists(ImportFileName))
+            {
+                MessageBox.Show("File already exists, will give a default name", Program.PNAme());
+                string DateTimeFileName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+                ImportFileName = Program.PIDsites() + DateTimeFileName;
+                HiddenImportFileName = Program.PIDsites() + DateTimeFileName;
+            }
+            // Write the status file
+            StreamWriter sw = new StreamWriter(HiddenImportFileName);
+            foreach(string line in StatusCommand.Split('\n'))
+            {
+                if (line.Trim().StartsWith("<Status>"))
+                {
+                    sw.Write(line.Trim().Replace("<Status>", "").Replace("</Status>", "") + "\n");
+                }
+            }
+            sw.Close();
+            sw.Dispose();
+
+            StreamWriter ws = new StreamWriter(ImportFileName);
+            ws.Write(ConfigAndSFTP);
+            ws.Close();
+            ws.Dispose();
+            ReloadUserControl();
+            
         }
     }
 }
