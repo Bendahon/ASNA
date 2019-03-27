@@ -69,6 +69,7 @@ namespace ASNA
             {
                 return;
             }
+            txtRenameBox.Text = lstboxSites.Text;
             CurrentActiveSite = true;
             string SelectedItem = Program.PIDsites() + lstboxSites.Text;
             string StatusItem = Program.PIDsites() + "." + lstboxSites.Text;
@@ -529,7 +530,7 @@ namespace ASNA
                 MessageBox.Show("File already exists, will give a default name", Program.PNAme());
                 string DateTimeFileName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
                 ImportFileName = Program.PIDsites() + DateTimeFileName;
-                HiddenImportFileName = Program.PIDsites() + DateTimeFileName;
+                HiddenImportFileName = Program.PIDsites() + "." + DateTimeFileName;
             }
             // Write the status file
             StreamWriter sw = new StreamWriter(HiddenImportFileName);

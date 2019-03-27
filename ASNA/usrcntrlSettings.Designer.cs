@@ -119,7 +119,7 @@
             this.btnSave.Location = new System.Drawing.Point(3, 652);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(136, 51);
-            this.btnSave.TabIndex = 7;
+            this.btnSave.TabIndex = 13;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -129,7 +129,7 @@
             this.btnCancel.Location = new System.Drawing.Point(145, 652);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(136, 51);
-            this.btnCancel.TabIndex = 13;
+            this.btnCancel.TabIndex = 14;
             this.btnCancel.TabStop = false;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -159,7 +159,7 @@
             this.chckEnableICMP.Location = new System.Drawing.Point(122, 205);
             this.chckEnableICMP.Name = "chckEnableICMP";
             this.chckEnableICMP.Size = new System.Drawing.Size(15, 14);
-            this.chckEnableICMP.TabIndex = 6;
+            this.chckEnableICMP.TabIndex = 7;
             this.chckEnableICMP.UseVisualStyleBackColor = true;
             this.chckEnableICMP.CheckedChanged += new System.EventHandler(this.chckEnableICMP_CheckedChanged);
             // 
@@ -195,7 +195,7 @@
             this.btnAddConfig.Location = new System.Drawing.Point(287, 652);
             this.btnAddConfig.Name = "btnAddConfig";
             this.btnAddConfig.Size = new System.Drawing.Size(136, 51);
-            this.btnAddConfig.TabIndex = 23;
+            this.btnAddConfig.TabIndex = 15;
             this.btnAddConfig.TabStop = false;
             this.btnAddConfig.Text = "Add Config";
             this.btnAddConfig.UseVisualStyleBackColor = true;
@@ -203,15 +203,15 @@
             // 
             // txtNewFileName
             // 
-            this.txtNewFileName.Location = new System.Drawing.Point(287, 626);
+            this.txtNewFileName.Location = new System.Drawing.Point(2, 625);
             this.txtNewFileName.Name = "txtNewFileName";
             this.txtNewFileName.Size = new System.Drawing.Size(278, 20);
-            this.txtNewFileName.TabIndex = 8;
+            this.txtNewFileName.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(289, 610);
+            this.label3.Location = new System.Drawing.Point(4, 609);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 25;
@@ -222,7 +222,7 @@
             this.btnDelete.Location = new System.Drawing.Point(429, 652);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(136, 51);
-            this.btnDelete.TabIndex = 27;
+            this.btnDelete.TabIndex = 16;
             this.btnDelete.TabStop = false;
             this.btnDelete.Text = "Delete file";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -230,10 +230,10 @@
             // 
             // btnRename
             // 
-            this.btnRename.Location = new System.Drawing.Point(571, 625);
+            this.btnRename.Location = new System.Drawing.Point(286, 624);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(52, 20);
-            this.btnRename.TabIndex = 9;
+            this.btnRename.TabIndex = 12;
             this.btnRename.TabStop = false;
             this.btnRename.Text = "OK";
             this.btnRename.UseVisualStyleBackColor = true;
@@ -245,7 +245,7 @@
             this.txtPort.MaxLength = 8;
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(246, 20);
-            this.txtPort.TabIndex = 28;
+            this.txtPort.TabIndex = 6;
             // 
             // label1
             // 
@@ -271,7 +271,7 @@
             this.chckSkipStatus.Location = new System.Drawing.Point(122, 227);
             this.chckSkipStatus.Name = "chckSkipStatus";
             this.chckSkipStatus.Size = new System.Drawing.Size(15, 14);
-            this.chckSkipStatus.TabIndex = 30;
+            this.chckSkipStatus.TabIndex = 8;
             this.chckSkipStatus.UseVisualStyleBackColor = true;
             // 
             // label5
@@ -289,7 +289,7 @@
             this.chckSkipConfig.Location = new System.Drawing.Point(123, 250);
             this.chckSkipConfig.Name = "chckSkipConfig";
             this.chckSkipConfig.Size = new System.Drawing.Size(15, 14);
-            this.chckSkipConfig.TabIndex = 32;
+            this.chckSkipConfig.TabIndex = 9;
             this.chckSkipConfig.UseVisualStyleBackColor = true;
             // 
             // label6
@@ -307,7 +307,7 @@
             this.chckSkipSFTP.Location = new System.Drawing.Point(123, 312);
             this.chckSkipSFTP.Name = "chckSkipSFTP";
             this.chckSkipSFTP.Size = new System.Drawing.Size(15, 14);
-            this.chckSkipSFTP.TabIndex = 34;
+            this.chckSkipSFTP.TabIndex = 10;
             this.chckSkipSFTP.UseVisualStyleBackColor = true;
             // 
             // lblSFTPWarning

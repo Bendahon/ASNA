@@ -85,7 +85,7 @@
             this.btnSave.Location = new System.Drawing.Point(256, 652);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(136, 51);
-            this.btnSave.TabIndex = 4;
+            this.btnSave.TabIndex = 5;
             this.btnSave.TabStop = false;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.btnAddSite.Location = new System.Drawing.Point(398, 652);
             this.btnAddSite.Name = "btnAddSite";
             this.btnAddSite.Size = new System.Drawing.Size(136, 51);
-            this.btnAddSite.TabIndex = 5;
+            this.btnAddSite.TabIndex = 6;
             this.btnAddSite.TabStop = false;
             this.btnAddSite.Text = "Add Site";
             this.btnAddSite.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             this.btnRemove.Location = new System.Drawing.Point(540, 652);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(136, 51);
-            this.btnRemove.TabIndex = 6;
+            this.btnRemove.TabIndex = 7;
             this.btnRemove.TabStop = false;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
@@ -118,7 +118,7 @@
             this.btnCancel.Location = new System.Drawing.Point(797, 652);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(136, 51);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.TabStop = false;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             this.btnRenameOK.Location = new System.Drawing.Point(540, 618);
             this.btnRenameOK.Name = "btnRenameOK";
             this.btnRenameOK.Size = new System.Drawing.Size(52, 20);
-            this.btnRenameOK.TabIndex = 10;
+            this.btnRenameOK.TabIndex = 3;
             this.btnRenameOK.TabStop = false;
             this.btnRenameOK.Text = "OK";
             this.btnRenameOK.UseVisualStyleBackColor = true;
@@ -158,7 +158,7 @@
             this.btnAddNewline.Location = new System.Drawing.Point(838, 4);
             this.btnAddNewline.Name = "btnAddNewline";
             this.btnAddNewline.Size = new System.Drawing.Size(95, 51);
-            this.btnAddNewline.TabIndex = 14;
+            this.btnAddNewline.TabIndex = 1;
             this.btnAddNewline.Text = "Add Newline";
             this.btnAddNewline.UseVisualStyleBackColor = true;
             this.btnAddNewline.Click += new System.EventHandler(this.btnAddNewline_Click);
@@ -168,7 +168,7 @@
             this.btnAddCommand.Location = new System.Drawing.Point(838, 123);
             this.btnAddCommand.Name = "btnAddCommand";
             this.btnAddCommand.Size = new System.Drawing.Size(95, 51);
-            this.btnAddCommand.TabIndex = 15;
+            this.btnAddCommand.TabIndex = 2;
             this.btnAddCommand.Text = "Add Custom Text";
             this.btnAddCommand.UseVisualStyleBackColor = true;
             this.btnAddCommand.Click += new System.EventHandler(this.btnAddCommand_Click);
@@ -190,7 +190,7 @@
             this.btnExport.Location = new System.Drawing.Point(682, 652);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(109, 51);
-            this.btnExport.TabIndex = 17;
+            this.btnExport.TabIndex = 8;
             this.btnExport.TabStop = false;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -201,7 +201,7 @@
             this.btnImport.Location = new System.Drawing.Point(682, 595);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(109, 51);
-            this.btnImport.TabIndex = 18;
+            this.btnImport.TabIndex = 4;
             this.btnImport.TabStop = false;
             this.btnImport.Text = "Import";
             this.btnImport.UseVisualStyleBackColor = true;

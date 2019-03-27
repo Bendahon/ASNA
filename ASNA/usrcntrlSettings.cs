@@ -132,6 +132,7 @@ namespace ASNA
                     SaveCurrentState(SiteName);
                 }
             }
+            txtNewFileName.Text = cmboSiteName.Text;
             try
             {
                 SiteName = cmboSiteName.Text;
@@ -160,9 +161,9 @@ namespace ASNA
                 chckEnableICMP.Checked = se.SkipICMPScan;
                 TurnOffDatSaveState();
             }
-            catch(Exception ex)
+            catch
             {
-                MessageBox.Show(ex.ToString());
+                //MessageBox.Show(ex.ToString());
                 return;
             }
         }

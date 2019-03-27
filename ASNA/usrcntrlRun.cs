@@ -25,11 +25,12 @@ namespace ASNA
             }
         }
         SshClient ssh;
+        WinSCP.Session session;
         bool SkipICMPScan = true;
         bool SkipStatusCMD = false;
         bool SkipConfigCMD = false;
         bool SkipSFTPCMD = false;
-        WinSCP.Session session;
+        StreamWriter LogFileFile;
 
         public void ReloadUserControl()
         {
@@ -96,16 +97,39 @@ namespace ASNA
         #region SSH Shit
         private void btnBackitup_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
+            string DT_folderName = DateTime.Now.ToString("yyyy-MMM");
+            string LogDocFolderName = Program.PIDdoc() + @"\log\" + DT_folderName + @"\";
+            if (!Directory.Exists(LogDocFolderName))
+            {
+                Directory.CreateDirectory(LogDocFolderName);
+            }
 
+            string DateTimeFileWriter = DateTime.Now.ToString("dd-MMM-yyyy_HH-mm-ss");
+            string LogFileNamington = $@"{LogDocFolderName}{DateTimeFileWriter}.txt";
+
+            LogFileFile = new StreamWriter(LogFileNamington);
+
+            WriteToLogBox($"Running Config: {lstboxSites.Text}");
+            WriteToLogBox($"Running Setting: {cmboSavedSite.Text}");
+            WriteToLogBox($"Save Location: {txtActualSaveLocation.Text}");
+            WriteToLogBox($"Server Name: {txtServerName.Text}");
+            WriteToLogBox($"Username: {txtUsername.Text}");
+            WriteToLogBox($"IP Address: {txtIPAddress.Text}");
+            WriteToLogBox($"Port: {txtPort.Text}");
+
+            System.Diagnostics.Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
+            txtLogBox.Text = "";
             if (SkipConfigCMD && SkipSFTPCMD && SkipStatusCMD)
             {
+                LogFileFile.Close();
                 return;
             }
+
             string IPAddress = txtIPAddress.Text;
             // Check if any boxes are empty
             if (!PreFlightChecks())
             {
+                LogFileFile.Close();
                 return;
             }
             if (SkipICMPScan)
@@ -119,6 +143,7 @@ namespace ASNA
                 if (!CheckValidHost(IPAddress))
                 {
                     WriteToLogBox("Failed to return ping from hostname");
+                    LogFileFile.Close();
                     return;
                 }
             }
@@ -136,6 +161,7 @@ namespace ASNA
             // do error checking on the status commands
             if (!DoSomeErrorChecking1(ConfigCommand, ConfigCommandDir))
             {
+                LogFileFile.Close();
                 return;
             }
 
@@ -146,19 +172,21 @@ namespace ASNA
             if (Directory.Exists(OutputFolderName))
             {
                 WriteToLogBox("Output directory already exists, Can't continue");
+                LogFileFile.Close();
                 return;
             }
             // connect to client
             WriteToLogBox("Attempting connection of SSH");
             try
             {
-                ssh = new SshClient(txtIPAddress.Text,Convert.ToInt32(txtPort.Text), txtUsername.Text, txtPassword.Text);
+                ssh = new SshClient(txtIPAddress.Text, Convert.ToInt32(txtPort.Text), txtUsername.Text, txtPassword.Text);
                 ssh.Connect();
                 WriteToLogBox("Connected to host!");
             }
             catch (Exception ex)
             {
                 WriteToLogBox(ex.Message);
+                LogFileFile.Close();
                 return;
             }
 
@@ -207,7 +235,7 @@ namespace ASNA
                     Password = txtPassword.Text,
                     PortNumber = Convert.ToInt32(txtPort.Text),
                     GiveUpSecurityAndAcceptAnySshHostKey = true
-                    
+
                 };
                 WriteToLogBox("Setting up SFTP!");
                 SFTPDownload(sessionOptions, OutputFolderName, SFTPCommand, SFTPOutputDirectory);
@@ -215,10 +243,11 @@ namespace ASNA
             }
 
             watch.Stop();
-            var ElapsedSeconds = watch.ElapsedMilliseconds / 1000;
-
+            long ElapsedSeconds = watch.ElapsedMilliseconds / 1000;
             WriteToLogBox($"it took {ElapsedSeconds} seconds to run");
 
+            LogFileFile.Close();
+            LogFileFile.Dispose();
         }
 
         private bool PreFlightChecks()
@@ -344,8 +373,7 @@ namespace ASNA
             StreamWriter sw = new StreamWriter(StatusFileName);
             foreach (string st in Statusinfo)
             {
-                //MessageBox.Show(st);
-                if(st == "" || st == null)
+                if(string.IsNullOrEmpty(st))
                 {
                     continue;
                 }
@@ -366,7 +394,7 @@ namespace ASNA
                 SshCommand output = ssh.RunCommand(st.Trim());
                 string FinalResult = output.Result;
 
-                if(FinalResult == "" || FinalResult == null)
+                if (string.IsNullOrEmpty(FinalResult))
                 {
                     WriteToLogBox("No result");
                 }
@@ -492,13 +520,14 @@ namespace ASNA
         #region Logbox info
         private void WriteToLogBox(string inputtext)
         {
-            string DateTimeFileName = DateTime.Now.ToString("dd-MMM-yyyy_HH-mm-ss");
-            string StartMessage = $"[{DateTimeFileName}] -- ASNA: ";
+            string DateTimeLogBoxWriter = DateTime.Now.ToString("dd-MMM-yyyy_HH-mm-ss");
+            string StartMessage = $"[{DateTimeLogBoxWriter}] -- ASNA: ";
             string EndMessage = "\n";
+
+            LogFileFile.Write($"{StartMessage}{inputtext}{EndMessage}");
             txtLogBox.AppendText($"{StartMessage}{inputtext}{EndMessage}");
             txtLogBox.ScrollToCaret();
         }
-
         private void btnClearLog_Click(object sender, EventArgs e)
         {
             txtLogBox.Text = "";

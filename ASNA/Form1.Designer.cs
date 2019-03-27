@@ -64,7 +64,7 @@
             this.btnDocumentation.Location = new System.Drawing.Point(0, 478);
             this.btnDocumentation.Name = "btnDocumentation";
             this.btnDocumentation.Size = new System.Drawing.Size(136, 51);
-            this.btnDocumentation.TabIndex = 5;
+            this.btnDocumentation.TabIndex = 3;
             this.btnDocumentation.TabStop = false;
             this.btnDocumentation.Text = "&Documentation";
             this.btnDocumentation.UseVisualStyleBackColor = true;
@@ -75,7 +75,7 @@
             this.btnSettings.Location = new System.Drawing.Point(3, 66);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(136, 51);
-            this.btnSettings.TabIndex = 4;
+            this.btnSettings.TabIndex = 1;
             this.btnSettings.TabStop = false;
             this.btnSettings.Text = "&Settings";
             this.btnSettings.UseVisualStyleBackColor = true;
@@ -86,7 +86,7 @@
             this.btnRun.Location = new System.Drawing.Point(3, 123);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(136, 51);
-            this.btnRun.TabIndex = 3;
+            this.btnRun.TabIndex = 2;
             this.btnRun.TabStop = false;
             this.btnRun.Text = "&Run";
             this.btnRun.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             this.btnExit.Location = new System.Drawing.Point(0, 535);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(136, 51);
-            this.btnExit.TabIndex = 1;
+            this.btnExit.TabIndex = 4;
             this.btnExit.TabStop = false;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -150,6 +150,7 @@
             this.usrcntrlConfiguration1.Name = "usrcntrlConfiguration1";
             this.usrcntrlConfiguration1.Size = new System.Drawing.Size(934, 703);
             this.usrcntrlConfiguration1.TabIndex = 3;
+            this.usrcntrlConfiguration1.TabStop = false;
             // 
             // usrcntrlSettings1
             // 

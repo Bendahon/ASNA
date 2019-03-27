@@ -60,6 +60,7 @@ namespace ASNA
             }
             catch
             {
+                ReloadUserControl();
                 return;
             }
         }

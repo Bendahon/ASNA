@@ -54,7 +54,7 @@
             this.btnBackitup.Location = new System.Drawing.Point(256, 652);
             this.btnBackitup.Name = "btnBackitup";
             this.btnBackitup.Size = new System.Drawing.Size(136, 51);
-            this.btnBackitup.TabIndex = 7;
+            this.btnBackitup.TabIndex = 8;
             this.btnBackitup.Text = "Backup";
             this.btnBackitup.UseVisualStyleBackColor = true;
             this.btnBackitup.Click += new System.EventHandler(this.btnBackitup_Click);
@@ -66,7 +66,7 @@
             this.lstboxSites.Location = new System.Drawing.Point(0, 0);
             this.lstboxSites.Name = "lstboxSites";
             this.lstboxSites.Size = new System.Drawing.Size(250, 706);
-            this.lstboxSites.TabIndex = 7;
+            this.lstboxSites.TabIndex = 10;
             this.lstboxSites.TabStop = false;
             // 
             // txtServerName
@@ -125,7 +125,7 @@
             this.txtLogBox.ReadOnly = true;
             this.txtLogBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLogBox.Size = new System.Drawing.Size(677, 355);
-            this.txtLogBox.TabIndex = 13;
+            this.txtLogBox.TabIndex = 11;
             this.txtLogBox.TabStop = false;
             // 
             // lblIPAddress
@@ -185,7 +185,7 @@
             this.btnClearLog.Location = new System.Drawing.Point(797, 652);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(136, 51);
-            this.btnClearLog.TabIndex = 21;
+            this.btnClearLog.TabIndex = 9;
             this.btnClearLog.TabStop = false;
             this.btnClearLog.Text = "Clear Log";
             this.btnClearLog.UseVisualStyleBackColor = true;
@@ -228,7 +228,7 @@
             this.txtPort.MaxLength = 8;
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(303, 20);
-            this.txtPort.TabIndex = 24;
+            this.txtPort.TabIndex = 7;
             // 
             // usrcntrlRun
             // 
