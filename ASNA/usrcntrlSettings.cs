@@ -22,42 +22,158 @@ namespace ASNA
         }
         bool CurrentSaveState = false;
         string SiteName = "";
-
-        public void ReloadUserControl()
+        
+        #region Adding Config File
+        private void btnAddConfig_Click(object sender, EventArgs e)
         {
-            CurrentSaveState = false;
-            cmboSiteName.Items.Clear();
-            txtNewFileName.Text = "";
-            foreach(string s in Directory.GetFiles(Program.PIDConfig()))
+            AddNewConfigFile();
+        }
+
+        private void AddNewConfigFile()
+        {
+            string DateTimeFileName = DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss");
+            string FileName = $@"{Program.PIDConfig()}{DateTimeFileName}";
+            Settings se = new Settings();
+            se.SkipICMPScan = false;
+            se.GenericName = "";
+            se.HostIP = "";
+            se.Password = "";
+            se.Username = "";
+            se.Port = "22";
+            se.SkipSFTP = true;
+            se.isPWEncrypted = true;
+            Settings.SaveData(se, FileName);
+            ReloadUserControl();
+        }
+        #endregion
+        #region Combo box reloading
+        private void cmboSiteName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeCurrentSiteInMemory();
+        }
+        private void ChangeCurrentSiteInMemory()
+        {
+            CheckIfNeedsToBeSaved();
+            txtNewFileName.Text = cmboSiteName.Text;
+            try
             {
-                cmboSiteName.Items.Add(s.Replace(Program.PIDConfig(), ""));
+                SiteName = cmboSiteName.Text;
+                string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
+                XmlSerializer xs = new XmlSerializer(typeof(Settings));
+                FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                Settings se = (Settings)xs.Deserialize(read);
+                if (se.isPWEncrypted == false)
+                {
+                    txtPassword.Text = se.Password;
+                }
+                else
+                {
+                    PasswordManager pm = new PasswordManager();
+                    txtPassword.Text = pm.DecodeString(se.Password);
+                }
+                read.Dispose();
+                txtDefaultIP.Text = se.HostIP;
+                txtUsername.Text = se.Username;
+                txtSiteName.Text = se.GenericName;
+                txtPort.Text = se.Port;
+                chckSkipStatus.Checked = se.SkipStatus;
+                chckSkipConfig.Checked = se.SkipConfig;
+                chckSkipSFTP.Checked = se.SkipSFTP;
+                chckEnableICMP.Checked = se.SkipICMPScan;
+                ChangeSaveToANegative();
             }
-            if(cmboSiteName.Items.Count >= 1)
+            catch
             {
-                cmboSiteName.SelectedIndex = 0;
+                return;
+            }
+        }
+        #endregion
+        #region Removing a file
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedFile();
+        }
+        private void DeleteSelectedFile()
+        {
+            string FileToDelete = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
+            DialogResult dr = MessageBox.Show("Are you sure?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                File.Delete(FileToDelete);
+                ReloadUserControl();
             }
             else
             {
                 return;
             }
-            SiteName = cmboSiteName.Text; 
         }
-
-        private void usrcntrlSettings_Load(object sender, EventArgs e)
+        #endregion
+        #region stupid textchanged
+        private void txtDefaultIP_TextChanged(object sender, EventArgs e)
         {
-            // think this is redundant
-            //ReloadUserControl();
+            CurrentSaveState = true;
         }
-
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void txtSiteName_TextChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void chckEnableICMP_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void chckSkipStatus_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void chckSkipConfig_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        private void chckSkipSFTP_CheckedChanged(object sender, EventArgs e)
+        {
+            CurrentSaveState = true;
+        }
+        #endregion
+        #region Saving
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveCurrentState();
         }
-
+        public void CheckIfNeedsToBeSaved()
+        {
+            if (GetCurrentSaveState())
+            {
+                DialogResult dr = MessageBox.Show("Save changes?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.OK)
+                {
+                    SaveCurrentState();
+                }
+                else
+                {
+                    ChangeSaveToANegative();
+                }
+            }
+        }
+        private void ChangeSaveToANegative()
+        {
+            CurrentSaveState = false;
+        }
+        public bool GetCurrentSaveState()
+        {
+            return CurrentSaveState;
+        }
         public void SaveCurrentState(string ExistingSiteName = "")
         {
             string FileName;
-            if(cmboSiteName.Text == "")
+            if (cmboSiteName.Text == "")
             {
                 string DateTimeFileName = DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss");
                 FileName = $@"{Program.PIDConfig()}{DateTimeFileName}";
@@ -95,161 +211,30 @@ namespace ASNA
             MessageBox.Show("Saved!", Program.PNAme());
             ReloadUserControl();
         }
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            ReloadUserControl();
-        }
-
-        private void btnAddConfig_Click(object sender, EventArgs e)
-        {
-            AddNewConfigFile();
-        }
-
-        private void AddNewConfigFile()
-        {
-            string DateTimeFileName = DateTime.Now.ToString("dd-MM-yyyy_hh-mm-ss");
-            string FileName = $@"{Program.PIDConfig()}{DateTimeFileName}";
-            Settings se = new Settings();
-            se.SkipICMPScan = false;
-            se.GenericName = "";
-            se.HostIP = "";
-            se.Password = "";
-            se.Username = "";
-            se.Port = "22";
-            se.SkipSFTP = true;
-            se.isPWEncrypted = true;
-            Settings.SaveData(se, FileName);
-            ReloadUserControl();
-        }
-
-        private void cmboSiteName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (GetCurrentSaveState())
-            {
-                DialogResult dr = MessageBox.Show("Save File?", Program.PNAme(), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(dr == DialogResult.Yes)
-                {
-                    SaveCurrentState(SiteName);
-                }
-            }
-            txtNewFileName.Text = cmboSiteName.Text;
-            try
-            {
-                SiteName = cmboSiteName.Text;
-                TurnOffDatSaveState();
-                string FileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-                XmlSerializer xs = new XmlSerializer(typeof(Settings));
-                FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                Settings se = (Settings)xs.Deserialize(read);
-                if(se.isPWEncrypted == false)
-                {
-                    txtPassword.Text = se.Password;
-                }
-                else
-                {
-                    PasswordManager pm = new PasswordManager();
-                    txtPassword.Text = pm.DecodeString(se.Password);
-                }
-                read.Dispose();
-                txtDefaultIP.Text = se.HostIP;
-                txtUsername.Text = se.Username;
-                txtSiteName.Text = se.GenericName;
-                txtPort.Text = se.Port;
-                chckSkipStatus.Checked = se.SkipStatus;
-                chckSkipConfig.Checked = se.SkipConfig;
-                chckSkipSFTP.Checked = se.SkipSFTP;
-                chckEnableICMP.Checked = se.SkipICMPScan;
-                TurnOffDatSaveState();
-            }
-            catch
-            {
-                //MessageBox.Show(ex.ToString());
-                return;
-            }
-        }
-
-        private void btnRename_Click(object sender, EventArgs e)
-        {
-            if(txtNewFileName.Text == "" || txtNewFileName.Text == null)
-            {
-                return;
-            }
-            string OriginalFileName = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-            string NewFileName = $@"{Program.PIDConfig()}{txtNewFileName.Text}";
-            if (File.Exists(NewFileName))
-            {
-                MessageBox.Show("File already exists", Program.PNAme());
-                return;
-            }
-            File.Move(OriginalFileName, NewFileName);
-            ReloadUserControl();
-
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            string FileToDelete = $@"{Program.PIDConfig()}{cmboSiteName.Text}";
-            DialogResult dr = MessageBox.Show("Are you sure?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if(dr == DialogResult.OK)
-            {
-                File.Delete(FileToDelete);
-                ReloadUserControl();
-            }
-            else
-            {
-                return;
-            }
-        }
-        #region stupid textchanged
-        private void txtDefaultIP_TextChanged(object sender, EventArgs e)
-        {
-            CurrentSaveState = true;
-        }
-        private void txtUsername_TextChanged(object sender, EventArgs e)
-        {
-            CurrentSaveState = true;
-        }
-        private void txtPassword_TextChanged(object sender, EventArgs e)
-        {
-            CurrentSaveState = true;
-        }
-        private void txtSiteName_TextChanged(object sender, EventArgs e)
-        {
-            CurrentSaveState = true;
-        }
-        private void chckEnableICMP_CheckedChanged(object sender, EventArgs e)
-        {
-            CurrentSaveState = true;
-        }
         #endregion
-
-        public bool GetCurrentSaveState()
-        {
-            return CurrentSaveState;
-        }
-
-        public void TurnOffDatSaveState()
-        {
-            CurrentSaveState = false;
-        }
-
+        #region Renaming
         private void btnRename_Click_1(object sender, EventArgs e)
+        {
+            RenameExistingFile();
+        }
+
+        private void RenameExistingFile()
         {
             if (string.IsNullOrWhiteSpace(txtNewFileName.Text))
             {
-                MessageBox.Show("String is empty");
                 return;
             }
+            CheckIfNeedsToBeSaved();
             string OriginalFileName = Program.PIDConfig() + cmboSiteName.Text;
             if (!File.Exists(OriginalFileName))
             {
-                MessageBox.Show("File doesn't exist");
+                MessageBox.Show("File doesn't exist", Program.PNAme());
                 return;
             }
 
             if (!IsValidFileName(cmboSiteName.Text, true))
             {
-                MessageBox.Show("Invalid file name");
+                MessageBox.Show("Invalid file name", Program.PNAme());
                 return;
             }
 
@@ -264,7 +249,31 @@ namespace ASNA
             File.Move(OriginalFileName, NewFileName);
             ReloadUserControl();
         }
-
+        #endregion
+        #region Extras
+        public void ReloadUserControl()
+        {
+            cmboSiteName.Items.Clear();
+            txtNewFileName.Text = "";
+            foreach (string s in Directory.GetFiles(Program.PIDConfig()))
+            {
+                cmboSiteName.Items.Add(s.Replace(Program.PIDConfig(), ""));
+            }
+            if (cmboSiteName.Items.Count >= 1)
+            {
+                cmboSiteName.SelectedIndex = 0;
+            }
+            else
+            {
+                return;
+            }
+            SiteName = cmboSiteName.Text;
+            ChangeSaveToANegative();
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ReloadUserControl();
+        }
         public static bool IsValidFileName(string expression, bool platformIndependent)
         {
             string sPattern = @"^(?!^(PRN|AUX|CLOCK\$|NUL|CON|COM\d|LPT\d|\..*)(\..+)?$)[^\x00-\x1f\\?*:\"";|/]+$";
@@ -274,5 +283,6 @@ namespace ASNA
             }
             return (Regex.IsMatch(expression, sPattern, RegexOptions.CultureInvariant));
         }
+        #endregion
     }
 }

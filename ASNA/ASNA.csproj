@@ -102,6 +102,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="usrcntrlConfiguration.resx">
       <DependentUpon>usrcntrlConfiguration.cs</DependentUpon>
@@ -118,6 +119,8 @@
     <None Include="BUILTPROJ\doc\Changelog.rtf" />
     <None Include="BUILTPROJ\doc\Credits.rtf" />
     <None Include="BUILTPROJ\doc\UserGuide.rtf" />
+    <None Include="BUILTPROJ\Fingerprinter.ASNA" />
+    <None Include="BUILTPROJ\Raspberry Pi.ASNA" />
     <None Include="doc\Changelog.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

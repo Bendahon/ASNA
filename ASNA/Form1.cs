@@ -41,8 +41,6 @@ namespace ASNA
             usrcntrlSettings1.ReloadUserControl();
         }
 
-
-
         private void btnRun_Click(object sender, EventArgs e)
         {
             CheckIfConfigNeedsToSaveChanges();
@@ -53,57 +51,39 @@ namespace ASNA
 
         private void btnDocumentation_Click(object sender, EventArgs e)
         {
+            CheckIfConfigNeedsToSaveChanges();
+            CheckIfSettingsNeedsToSaveChanges();
             usrcntrlDocumentation1.BringToFront();
             usrcntrlDocumentation1.ReloadUserControl();
         }
+        private void CheckIfConfigNeedsToSaveChanges()
+        {
+            usrcntrlConfiguration1.CheckIfNeedsToBeSaved();
+        }
 
+        private void CheckIfSettingsNeedsToSaveChanges()
+        {
+            usrcntrlSettings1.CheckIfNeedsToBeSaved();
+        }
+
+        #region Exiting Program
         private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogToExitProgram();
+        }
+
+        private static void DialogToExitProgram()
         {
             DialogResult dr = MessageBox.Show("Are you sure you wish to exit?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (dr == DialogResult.OK)
             {
                 Application.Exit();
             }
-            else if (dr == DialogResult.Ignore)
-            {
-                return;
-            }
             else
             {
                 return;
             }
         }
-
-        private void CheckIfConfigNeedsToSaveChanges()
-        {
-            if (usrcntrlConfiguration1.GetCurrentSaveState())
-            {
-                DialogResult dr = MessageBox.Show("Save changes?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (dr == DialogResult.OK)
-                {
-                    usrcntrlConfiguration1.SaveActiveInformation();
-                }
-                else
-                {
-                    usrcntrlConfiguration1.ChangeSaveToANegative();
-                }
-            }
-        }
-
-        private void CheckIfSettingsNeedsToSaveChanges()
-        {
-            if (usrcntrlSettings1.GetCurrentSaveState())
-            {
-                DialogResult dr = MessageBox.Show("Save changes?", Program.PNAme(), MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (dr == DialogResult.OK)
-                {
-                    usrcntrlSettings1.SaveCurrentState();
-                }
-                else
-                {
-                    usrcntrlSettings1.TurnOffDatSaveState();
-                }
-            }
-        }
+        #endregion
     }
 }

@@ -38,6 +38,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblProgramName = new System.Windows.Forms.Label();
             this.pnlDockME = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.usrcntrlConfiguration1 = new ASNA.usrcntrlConfiguration();
             this.usrcntrlSettings1 = new ASNA.usrcntrlSettings();
             this.usrcntrlDocumentation1 = new ASNA.usrcntrlDocumentation();
@@ -45,6 +46,7 @@
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnlDockME.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -116,6 +118,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Controls.Add(this.lblProgramName);
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
@@ -141,6 +144,16 @@
             this.pnlDockME.Name = "pnlDockME";
             this.pnlDockME.Size = new System.Drawing.Size(934, 703);
             this.pnlDockME.TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ASNA.Properties.Resources.Asna_ICon_rev_1;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(133, 92);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // usrcntrlConfiguration1
             // 
@@ -199,6 +212,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnlDockME.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -217,6 +231,7 @@
         private usrcntrlSettings usrcntrlSettings1;
         private usrcntrlDocumentation usrcntrlDocumentation1;
         private System.Windows.Forms.Panel pnlDockME;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

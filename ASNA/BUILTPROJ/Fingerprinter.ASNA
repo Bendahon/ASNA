@@ -1,0 +1,346 @@
+<DocumentElement>
+  <StatusCMD>
+    <Status>ASNAcommand ======System======</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ---Hostname---</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>uname -n</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ---Users active now---</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>pinky</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ---Runlevel---</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>who -r</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ---Uptime---</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>uptime</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ---Free Memory---</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>free -h</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ======File System======</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>df --total -h</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand ======Time======</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>date</Status>
+  </StatusCMD>
+</DocumentElement>-------------------1-------------------<dataset>
+  <ConfigCmd>
+    <Command>ps aux</Command>
+    <OutputFile>/process/ps.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/group</Command>
+    <OutputFile>/users/group.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/passwd</Command>
+    <OutputFile>/users/passwd.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /var/lib/dbus/machine-id</Command>
+    <OutputFile>/pc/Machine-ID.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>dmidecode -t 4 | grep ID</Command>
+    <OutputFile>/pc/PCID.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>dmidecode -s system-uuid</Command>
+    <OutputFile>/pc/systemuuid.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>awk -F: '($3 == "0") {print}' /etc/passwd</Command>
+    <OutputFile>/users/whohasroot.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cut -d: -f1 /etc/passwd</Command>
+    <OutputFile>/users/cutpasswd.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command> cat ~/.bash_history</Command>
+    <OutputFile>/users/Bash_History.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/*-release</Command>
+    <OutputFile>/pc/PC_Info.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /proc/version</Command>
+    <OutputFile>/pc/Kernel.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>uname -a</Command>
+    <OutputFile>/pc/unameA.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>dmesg</Command>
+    <OutputFile>/pc/DMESG.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/profile</Command>
+    <OutputFile>/users/defaultprofile.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat ~/.bashrc</Command>
+    <OutputFile>/users/bashrc.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat ~/.profile</Command>
+    <OutputFile>/users/currentprofile.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat ~/.bash_logout</Command>
+    <OutputFile>/users/bash_logout.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ps -ef | grep root</Command>
+    <OutputFile>/pc/ps_as_root.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alh /usr/bin</Command>
+    <OutputFile>/programs/bin.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alh /sbin</Command>
+    <OutputFile>/programs/sbin.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>dpkg -l</Command>
+    <OutputFile>/programs/dpkg.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alh /var/cache/apt/archives</Command>
+    <OutputFile>/programs/apt_archives.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/sysctl.conf 2&gt;/dev/null</Command>
+    <OutputFile>/config/sysctl.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/inetd.conf 2&gt;/dev/null</Command>
+    <OutputFile>/config/inetd.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/apache2/apache2.conf 2&gt;/dev/null</Command>
+    <OutputFile>/config/apache.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/mysql/my.cnf 2&gt;/dev/null</Command>
+    <OutputFile>/config/my.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/mysql/mysql.cnf 2&gt;/dev/null</Command>
+    <OutputFile>/config/mysql.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>crontab -l</Command>
+    <OutputFile>/cron/crontab.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alh /var/spool/cron</Command>
+    <OutputFile>/cron/cron.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -al /etc/ | grep cron</Command>
+    <OutputFile>/cron/etc_with_cron.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/cron*</Command>
+    <OutputFile>/cron/catting_cron.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>/sbin/ifconfig -a</Command>
+    <OutputFile>/networking/ifconfig.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/network/interfaces</Command>
+    <OutputFile>/networking/interfaces.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/resolv.conf</Command>
+    <OutputFile>/networking/resolv.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/networks</Command>
+    <OutputFile>/networking/networks.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>hostname</Command>
+    <OutputFile>/networking/hostname.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>grep 22 /etc/services</Command>
+    <OutputFile>/networking/services_ssh.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/services</Command>
+    <OutputFile>/networking/services.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>netstat</Command>
+    <OutputFile>/networking/netstat.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>arp -e</Command>
+    <OutputFile>/networking/arp_e.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>/sbin/route -nee</Command>
+    <OutputFile>/networking/route.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>last</Command>
+    <OutputFile>/pc/login_history.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>id</Command>
+    <OutputFile>/pc/id.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>w</Command>
+    <OutputFile>/users/logged_in.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alhR ~</Command>
+    <OutputFile>/users/file_structure.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/ssh/ssh_config</Command>
+    <OutputFile>/networking/ssh_config.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/ssh/sshd_config</Command>
+    <OutputFile>/networking/sshd_config.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find /etc/ -readable -type f 2&gt;/dev/null</Command>
+    <OutputFile>/pc/ReadableFiles_ETC.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alh /var/log</Command>
+    <OutputFile>/pc/var_log_files.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /var/lib/dhcp/dhclient.leases</Command>
+    <OutputFile>/networking/dhcp_leases.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ls -alhR /var/www</Command>
+    <OutputFile>/networking/www_list.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>mount</Command>
+    <OutputFile>/pc/mounted_fs.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>df -h</Command>
+    <OutputFile>/pc/df_h.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /etc/fstab</Command>
+    <OutputFile>/pc/unmounted.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>lsblk</Command>
+    <OutputFile>/pc/lsblk.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -perm -1000 -type d 2&gt;/dev/null</Command>
+    <OutputFile>/sticky/sticky_bits.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -perm -g=s -type f 2&gt;/dev/null</Command>
+    <OutputFile>/sticky/SGID.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -perm -u=s -type f 2&gt;/dev/null</Command>
+    <OutputFile>/sticky/SUID.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -writable -type d 2&gt;/dev/null</Command>
+    <OutputFile>/pc/world_writable.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -perm -222 -type d 2&gt;/dev/null</Command>
+    <OutputFile>/pc/world_writable2.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -perm -o x -type d 2&gt;/dev/null</Command>
+    <OutputFile>/pc/world_exec.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -xdev -type d \( -perm -002 -a ! -perm -1000 \) -print 2&gt;/dev/null</Command>
+    <OutputFile>/pc/world_exec2.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name perl* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_perl.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name python* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_python.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name gcc* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_gcc.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name cc* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_cc.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name nc* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_nc.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>find / -name tftp* 2&gt;/dev/null</Command>
+    <OutputFile>/pc/prog_lang_tftp.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>service --status-all</Command>
+    <OutputFile>/pc/services_status.txt</OutputFile>
+  </ConfigCmd>
+  <SFTPCommand>
+    <DownloadDirectory>/null</DownloadDirectory>
+    <OutputDirectory>/null</OutputDirectory>
+  </SFTPCommand>
+</dataset>

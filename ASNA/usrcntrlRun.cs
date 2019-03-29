@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using WinSCP;
+using System.Data;
 
 namespace ASNA
 {
@@ -26,12 +27,9 @@ namespace ASNA
         }
         SshClient ssh;
         WinSCP.Session session;
-        bool SkipICMPScan = true;
-        bool SkipStatusCMD = false;
-        bool SkipConfigCMD = false;
-        bool SkipSFTPCMD = false;
         StreamWriter LogFileFile;
 
+        #region Extras
         public void ReloadUserControl()
         {
             cmboSavedSite.Items.Clear();
@@ -57,28 +55,6 @@ namespace ASNA
                 }
             }
         }
-
-        private void cmboSaveLocation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string OutputLocation = "";
-            switch (cmboSaveLocation.Text)
-            {
-                case "Documents":
-                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    break;
-                case "Desktop":
-                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    break;
-                case "Custom":
-                    OutputLocation = SelectACustomOutputFolder();
-                    break;
-                default:
-                    cmboSaveLocation.Text = "Desktop";
-                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                    break;
-            }
-            txtActualSaveLocation.Text = OutputLocation + @"\";
-        }
         private string SelectACustomOutputFolder()
         {
             string OutputDir;
@@ -94,6 +70,7 @@ namespace ASNA
                 return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             }
         }
+        #endregion
         #region SSH Shit
         private void btnBackitup_Click(object sender, EventArgs e)
         {
@@ -116,10 +93,14 @@ namespace ASNA
             WriteToLogBox($"Username: {txtUsername.Text}");
             WriteToLogBox($"IP Address: {txtIPAddress.Text}");
             WriteToLogBox($"Port: {txtPort.Text}");
+            WriteToLogBox($"ICMP Skipped: {chckEnableICMP.Checked}");
+            WriteToLogBox($"Status Skipped: {chckSkipStatus.Checked}");
+            WriteToLogBox($"Config Skipped: {chckSkipConfig.Checked}");
+            WriteToLogBox($"SFTP Skipped: {chckSkipSFTP.Checked}");
 
             System.Diagnostics.Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
             txtLogBox.Text = "";
-            if (SkipConfigCMD && SkipSFTPCMD && SkipStatusCMD)
+            if(chckSkipConfig.Checked && chckSkipSFTP.Checked && chckSkipStatus.Checked)
             {
                 LogFileFile.Close();
                 return;
@@ -132,7 +113,7 @@ namespace ASNA
                 LogFileFile.Close();
                 return;
             }
-            if (SkipICMPScan)
+            if (chckEnableICMP.Checked)
             {
                 WriteToLogBox("Skipping ICMP Scan");
             }
@@ -194,7 +175,7 @@ namespace ASNA
             // Checked for existance before 
             Directory.CreateDirectory(OutputFolderName);
 
-            if (SkipStatusCMD)
+            if (chckSkipStatus.Checked)
             {
                 WriteToLogBox("Skipping status commands!");
             }
@@ -204,7 +185,7 @@ namespace ASNA
                 GoOverTheStatusCommands(StatusFile, OutputFolderName, monthdaystuff);
                 WriteToLogBox("Status File Generated");
             }
-            if (SkipConfigCMD)
+            if (chckSkipConfig.Checked)
             {
                 WriteToLogBox("Skipping config commands!");
             }
@@ -218,7 +199,7 @@ namespace ASNA
 
             // Now to do the SFTP commands
 
-            if (SkipSFTPCMD)
+            if (chckSkipSFTP.Checked)
             {
                 WriteToLogBox("Skipping SFTP due to settings!");
             }
@@ -226,7 +207,6 @@ namespace ASNA
             {
                 List<string> SFTPCommand = LoadSFTPDLFromXML(DOC);
                 List<string> SFTPOutputDirectory = LoadSFTPOPFromXML(DOC);
-
                 SessionOptions sessionOptions = new SessionOptions
                 {
                     Protocol = Protocol.Sftp,
@@ -249,7 +229,6 @@ namespace ASNA
             LogFileFile.Close();
             LogFileFile.Dispose();
         }
-
         private bool PreFlightChecks()
         {
             if (txtActualSaveLocation.Text == "")
@@ -315,6 +294,8 @@ namespace ASNA
         }
         private List<string> LoadConfigDLFromXML(XDocument xdoc)
         {
+
+
             List<string> status = new List<string>();
             foreach (XElement el in xdoc.Descendants("Command"))
             {
@@ -410,10 +391,15 @@ namespace ASNA
         {
             for (int x = 0; x < ConfigCommand.Count; x++)
             {
+                // Read each item from the lists
                 string ConfigCommand1 = ConfigCommand[x].Trim();
                 string ConfigDir1 = ConfigCommandDir[x].Trim();
+                // Make sure you get rid of that silly ampersand shit
+                ConfigCommand1 = DeserialiseXMLFromStr(ConfigCommand1);
+                ConfigDir1 = DeserialiseXMLFromStr(ConfigDir1);
+
                 WriteToLogBox($"Running command {ConfigCommand1}");
-                SshCommand output = ssh.RunCommand(ConfigCommand1);
+                SshCommand output = ssh.RunCommand(ConfigCommand1.Trim());
                 string FinalResult = output.Result;
 
                 if (FinalResult == "")
@@ -476,8 +462,10 @@ namespace ASNA
                 for(int i = 0; i < IPDir.Count; i++)
                 {
                     string localPath = $"{OPFolderName}{OPdir[i]}";
+                    localPath = DeserialiseXMLFromStr(localPath);
                     Directory.CreateDirectory(localPath);
                     string remotePath = IPDir[i];
+                    remotePath = DeserialiseXMLFromStr(remotePath);
                     // Enumerate files and directories to download
                     IEnumerable<RemoteFileInfo> fileInfos = session.EnumerateRemoteFiles(remotePath, null, EnumerationOptions.EnumerateDirectories | EnumerationOptions.AllDirectories);
 
@@ -507,7 +495,6 @@ namespace ASNA
             catch (Exception e)
             {
                 WriteToLogBox($"Error: {e}");
-                return;
             }
             finally
             {
@@ -515,6 +502,32 @@ namespace ASNA
                 session.Dispose();
                 GC.Collect();
             }
+        }
+        private string DeserialiseXMLFromStr(string inputf)
+        {
+            // Replace all occurances of the escape chars in an input string
+            string returnstring = inputf;
+            string Ampersand_xml = "&amp;";
+            string Ampersand = "&";
+            returnstring = returnstring.Replace(Ampersand_xml, Ampersand);
+
+            string Less_than_xml = "&lt;";
+            string Less_than = "<";
+            returnstring = returnstring.Replace(Less_than_xml, Less_than);
+
+            string Greater_than_xml = "&gt;";
+            string Greater_than = ">";
+            returnstring = returnstring.Replace(Greater_than_xml, Greater_than);
+
+            string Qoutes_xml = "&quot;";
+            string Qoutes = "\"";
+            returnstring = returnstring.Replace(Qoutes_xml, Qoutes);
+
+            string Apostrophe_xml = "&apos;";
+            string Apostrophe = "'";
+            returnstring = returnstring.Replace(Apostrophe_xml, Apostrophe);
+
+            return returnstring;
         }
         #endregion
         #region Logbox info
@@ -533,17 +546,24 @@ namespace ASNA
             txtLogBox.Text = "";
         }
         #endregion
-
-
+        #region Combobox
         private void cmboSavedSite_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cmboSavedSite.Text == "None")
+            ChangeComboBox();
+        }
+        private void ChangeComboBox()
+        {
+            if (cmboSavedSite.Text == "None")
             {
                 txtIPAddress.Text = "";
                 txtPassword.Text = "";
                 txtServerName.Text = "";
                 txtUsername.Text = "";
                 txtPort.Text = "22";
+                chckEnableICMP.Checked = false;
+                chckSkipConfig.Checked = false;
+                chckSkipSFTP.Checked = true;
+                chckSkipStatus.Checked = false;
                 return;
             }
             string FileName = $@"{Program.PIDConfig()}{cmboSavedSite.Text}";
@@ -552,7 +572,7 @@ namespace ASNA
             Settings se = (Settings)xs.Deserialize(read);
             read.Dispose();
             txtIPAddress.Text = se.HostIP;
-            if(se.isPWEncrypted == false)
+            if (se.isPWEncrypted == false)
             {
                 txtPassword.Text = se.Password;
             }
@@ -564,11 +584,36 @@ namespace ASNA
             txtServerName.Text = se.GenericName;
             txtUsername.Text = se.Username;
             txtPort.Text = se.Port;
-            SkipICMPScan = se.SkipICMPScan;
-            SkipStatusCMD = se.SkipStatus;
-            SkipSFTPCMD = se.SkipSFTP;
-            SkipConfigCMD = se.SkipConfig;
-
+            chckSkipConfig.Checked = se.SkipConfig;
+            chckSkipSFTP.Checked = se.SkipSFTP;
+            chckSkipStatus.Checked = se.SkipStatus;
+            chckEnableICMP.Checked = se.SkipICMPScan;
         }
+        private void cmboSaveLocation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CreatingCustomSaveLocation();
+        }
+        private void CreatingCustomSaveLocation()
+        {
+            string OutputLocation = "";
+            switch (cmboSaveLocation.Text)
+            {
+                case "Documents":
+                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    break;
+                case "Desktop":
+                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    break;
+                case "Custom":
+                    OutputLocation = SelectACustomOutputFolder();
+                    break;
+                default:
+                    cmboSaveLocation.Text = "Desktop";
+                    OutputLocation = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    break;
+            }
+            txtActualSaveLocation.Text = OutputLocation + @"\";
+        }
+        #endregion
     }
 }

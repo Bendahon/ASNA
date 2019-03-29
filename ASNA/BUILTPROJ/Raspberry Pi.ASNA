@@ -1,0 +1,42 @@
+<DocumentElement>
+  <StatusCMD>
+    <Status>ASNAcommand =======Temprature=======</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>/opt/vc/bin/vcgencmd measure_temp</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAnewline</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>ASNAcommand =======ClockSpeed=======</Status>
+  </StatusCMD>
+  <StatusCMD>
+    <Status>vcgencmd measure_clock arm</Status>
+  </StatusCMD>
+</DocumentElement>-------------------1-------------------<dataset>
+  <ConfigCmd>
+    <Command>cat /etc/group</Command>
+    <OutputFile>/test/iamthebest/groups.txt</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /var/log/alternatives.log</Command>
+    <OutputFile>/log/alternatives.log</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /var/log/auth.log</Command>
+    <OutputFile>/log/auth.log</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>cat /var/log/boot.log</Command>
+    <OutputFile>/log/boot.log</OutputFile>
+  </ConfigCmd>
+  <ConfigCmd>
+    <Command>ps aux</Command>
+    <OutputFile>CommandList.txt</OutputFile>
+  </ConfigCmd>
+  <SFTPCommand>
+    <DownloadDirectory>/bin/</DownloadDirectory>
+    <OutputDirectory>/binary/</OutputDirectory>
+  </SFTPCommand>
+</dataset>

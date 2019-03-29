@@ -273,6 +273,7 @@
             this.chckSkipStatus.Size = new System.Drawing.Size(15, 14);
             this.chckSkipStatus.TabIndex = 8;
             this.chckSkipStatus.UseVisualStyleBackColor = true;
+            this.chckSkipStatus.CheckedChanged += new System.EventHandler(this.chckSkipStatus_CheckedChanged);
             // 
             // label5
             // 
@@ -291,6 +292,7 @@
             this.chckSkipConfig.Size = new System.Drawing.Size(15, 14);
             this.chckSkipConfig.TabIndex = 9;
             this.chckSkipConfig.UseVisualStyleBackColor = true;
+            this.chckSkipConfig.CheckedChanged += new System.EventHandler(this.chckSkipConfig_CheckedChanged);
             // 
             // label6
             // 
@@ -309,6 +311,7 @@
             this.chckSkipSFTP.Size = new System.Drawing.Size(15, 14);
             this.chckSkipSFTP.TabIndex = 10;
             this.chckSkipSFTP.UseVisualStyleBackColor = true;
+            this.chckSkipSFTP.CheckedChanged += new System.EventHandler(this.chckSkipSFTP_CheckedChanged);
             // 
             // lblSFTPWarning
             // 
@@ -368,7 +371,6 @@
             this.MaximumSize = new System.Drawing.Size(936, 706);
             this.Name = "usrcntrlSettings";
             this.Size = new System.Drawing.Size(936, 706);
-            this.Load += new System.EventHandler(this.usrcntrlSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

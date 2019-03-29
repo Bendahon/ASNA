@@ -24,7 +24,7 @@ namespace ASNA
         }
         public static string PVersion()
         {
-            return "1.1.4";
+            return "1.1.5";
         }
         public static string PNameAndVersion()
         {
@@ -53,6 +53,7 @@ namespace ASNA
             return PIDMAIN() + @"doc\";
         }
         #endregion
+        #region InstallerStuff
         public static void CheckInstaller()
         {
             bool ShouldIExitAfterwards = false;
@@ -113,14 +114,12 @@ namespace ASNA
                 Environment.Exit(0);
             }
         }
-
         private static void RemovingVersionControl()
         {
             StreamWriter sw = new StreamWriter(PIDdoc() + "version");
             sw.Write("INVALID");
             sw.Close();
         }
-
         private static bool InstallingASNA()
         {
             MessageBox.Show("Missing MAIN folder", PNAme());
@@ -265,12 +264,10 @@ namespace ASNA
                 return "";
             }
         }
-
         public static string GettingRunningDirectory()
         {
             return AppContext.BaseDirectory;
         }
-
         private static string GettingEXERunningDirectory()
         {
             string ASNAFile = GettingRunningDirectory() + @"\ASNA.exe";
@@ -360,5 +357,6 @@ namespace ASNA
             sw.Write(PVersion());
             sw.Close();
         }
+        #endregion
     }
 }

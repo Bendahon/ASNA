@@ -47,6 +47,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblPort = new System.Windows.Forms.Label();
             this.txtPort = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chckSkipConfig = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chckSkipStatus = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chckSkipSFTP = new System.Windows.Forms.CheckBox();
+            this.lblSkipICMP = new System.Windows.Forms.Label();
+            this.chckEnableICMP = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnBackitup
@@ -230,10 +238,90 @@
             this.txtPort.Size = new System.Drawing.Size(303, 20);
             this.txtPort.TabIndex = 7;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(685, 183);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 39;
+            this.label5.Text = "Skip config";
+            // 
+            // chckSkipConfig
+            // 
+            this.chckSkipConfig.AutoSize = true;
+            this.chckSkipConfig.Location = new System.Drawing.Point(785, 183);
+            this.chckSkipConfig.Name = "chckSkipConfig";
+            this.chckSkipConfig.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipConfig.TabIndex = 36;
+            this.chckSkipConfig.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(684, 160);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Skip Status";
+            // 
+            // chckSkipStatus
+            // 
+            this.chckSkipStatus.AutoSize = true;
+            this.chckSkipStatus.Location = new System.Drawing.Point(784, 160);
+            this.chckSkipStatus.Name = "chckSkipStatus";
+            this.chckSkipStatus.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipStatus.TabIndex = 35;
+            this.chckSkipStatus.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(685, 205);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 13);
+            this.label6.TabIndex = 41;
+            this.label6.Text = "Skip SFTP";
+            // 
+            // chckSkipSFTP
+            // 
+            this.chckSkipSFTP.AutoSize = true;
+            this.chckSkipSFTP.Location = new System.Drawing.Point(785, 205);
+            this.chckSkipSFTP.Name = "chckSkipSFTP";
+            this.chckSkipSFTP.Size = new System.Drawing.Size(15, 14);
+            this.chckSkipSFTP.TabIndex = 40;
+            this.chckSkipSFTP.UseVisualStyleBackColor = true;
+            // 
+            // lblSkipICMP
+            // 
+            this.lblSkipICMP.AutoSize = true;
+            this.lblSkipICMP.Location = new System.Drawing.Point(684, 138);
+            this.lblSkipICMP.Name = "lblSkipICMP";
+            this.lblSkipICMP.Size = new System.Drawing.Size(76, 13);
+            this.lblSkipICMP.TabIndex = 43;
+            this.lblSkipICMP.Text = "Skip ICMP first";
+            // 
+            // chckEnableICMP
+            // 
+            this.chckEnableICMP.AutoSize = true;
+            this.chckEnableICMP.Location = new System.Drawing.Point(784, 138);
+            this.chckEnableICMP.Name = "chckEnableICMP";
+            this.chckEnableICMP.Size = new System.Drawing.Size(15, 14);
+            this.chckEnableICMP.TabIndex = 42;
+            this.chckEnableICMP.UseVisualStyleBackColor = true;
+            // 
             // usrcntrlRun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblSkipICMP);
+            this.Controls.Add(this.chckEnableICMP);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.chckSkipSFTP);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.chckSkipConfig);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.chckSkipStatus);
             this.Controls.Add(this.lblPort);
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label2);
@@ -282,5 +370,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPort;
         private System.Windows.Forms.TextBox txtPort;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chckSkipConfig;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chckSkipStatus;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chckSkipSFTP;
+        private System.Windows.Forms.Label lblSkipICMP;
+        private System.Windows.Forms.CheckBox chckEnableICMP;
     }
 }
