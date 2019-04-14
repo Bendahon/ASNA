@@ -24,7 +24,7 @@ namespace ASNA
         }
         public static string PVersion()
         {
-            return "1.1.5";
+            return "1.1.6";
         }
         public static string PNameAndVersion()
         {

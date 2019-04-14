@@ -209,6 +209,7 @@ namespace ASNA
         private void btnRenameOK_Click(object sender, EventArgs e)
         {
             RenameTheCurrentFile();
+            btnSave.Enabled = true;
         }
         private void RenameTheCurrentFile()
         {
@@ -253,13 +254,11 @@ namespace ASNA
             if (File.Exists(newFileName))
             {
                 MessageBox.Show("File already exists, try again", Program.PNAme());
-                txtRenameBox.Text = "";
                 return true;
             }
             if (File.Exists(hiddenFileName))
             {
                 MessageBox.Show("Status file already exists, manual clean me please", Program.PNAme());
-                txtRenameBox.Text = "";
                 return true;
             }
             return false;
@@ -339,10 +338,14 @@ namespace ASNA
         private void dgridSystem_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             ChangesToMake = true;
+            btnRenameOK.Enabled = false;
+            btnSave.Enabled = true;
         }
         private void dgridSFTP_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             ChangesToMake = true;
+            btnRenameOK.Enabled = false;
+            btnSave.Enabled = true;
         }
         private bool GetCurrentSaveState()
         {
@@ -355,6 +358,8 @@ namespace ASNA
         private void txtStatusBox_TextChanged_1(object sender, EventArgs e)
         {
             ChangesToMake = true;
+            btnRenameOK.Enabled = false;
+            btnSave.Enabled = true;
         }
         #endregion
         #region Colouring Books
@@ -628,5 +633,32 @@ namespace ASNA
             //MessageBox.Show(ChangesToMake.ToString());
         }
         #endregion
+
+        private void txtRenameBox_TextChanged(object sender, EventArgs e)
+        {
+            if(txtRenameBox.Text != lstboxSites.Text)
+            {
+                btnSave.Enabled = false;
+                txtStatusBox.Enabled = false;
+                dgridSFTP.Enabled = false;
+                dgridSystem.Enabled = false;
+                btnAddNewline.Enabled = false;
+                btnAddSite.Enabled = false;
+                btnImport.Enabled = false;
+                btnExport.Enabled = false;
+            }
+            else
+            {
+                btnSave.Enabled = true;
+                txtStatusBox.Enabled = true;
+                dgridSFTP.Enabled = true;
+                dgridSystem.Enabled = true;
+                btnAddNewline.Enabled = true;
+                btnAddSite.Enabled = true;
+                btnImport.Enabled = true;
+                btnExport.Enabled = true;
+            }
+
+        }
     }
 }

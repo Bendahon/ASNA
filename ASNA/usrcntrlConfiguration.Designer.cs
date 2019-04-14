@@ -141,6 +141,7 @@
             this.txtRenameBox.Size = new System.Drawing.Size(278, 20);
             this.txtRenameBox.TabIndex = 9;
             this.txtRenameBox.TabStop = false;
+            this.txtRenameBox.TextChanged += new System.EventHandler(this.txtRenameBox_TextChanged);
             // 
             // btnRenameOK
             // 

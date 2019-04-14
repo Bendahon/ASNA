@@ -50,6 +50,7 @@ namespace ASNA
         private void cmboSiteName_SelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeCurrentSiteInMemory();
+            btnRename.Enabled = true;
         }
         private void ChangeCurrentSiteInMemory()
         {
@@ -112,34 +113,42 @@ namespace ASNA
         private void txtDefaultIP_TextChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void txtUsername_TextChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void txtSiteName_TextChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void chckEnableICMP_CheckedChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void chckSkipStatus_CheckedChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void chckSkipConfig_CheckedChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         private void chckSkipSFTP_CheckedChanged(object sender, EventArgs e)
         {
             CurrentSaveState = true;
+            btnRename.Enabled = false;
         }
         #endregion
         #region Saving
@@ -284,5 +293,41 @@ namespace ASNA
             return (Regex.IsMatch(expression, sPattern, RegexOptions.CultureInvariant));
         }
         #endregion
+
+        private void txtNewFileName_TextChanged(object sender, EventArgs e)
+        {
+            if(txtNewFileName.Text != cmboSiteName.Text)
+            {
+                btnSave.Enabled = false;
+                cmboSiteName.Enabled = false;
+                txtDefaultIP.Enabled = false;
+                txtPassword.Enabled = false;
+                txtPort.Enabled = false;
+                txtUsername.Enabled = false;
+                txtSiteName.Enabled = false;
+                chckEnableICMP.Enabled = false;
+                chckSkipConfig.Enabled = false;
+                chckSkipSFTP.Enabled = false;
+                chckSkipStatus.Enabled = false;
+                btnAddConfig.Enabled = false;
+                btnDelete.Enabled = false;
+            }
+            else
+            {
+                btnSave.Enabled = true;
+                cmboSiteName.Enabled = true;
+                txtDefaultIP.Enabled = true;
+                txtPassword.Enabled = true;
+                txtPort.Enabled = true;
+                txtUsername.Enabled = true;
+                txtSiteName.Enabled = true;
+                chckEnableICMP.Enabled = true;
+                chckSkipConfig.Enabled = true;
+                chckSkipSFTP.Enabled = true;
+                chckSkipStatus.Enabled = true;
+                btnAddConfig.Enabled = true;
+                btnDelete.Enabled = true;
+            }
+        }
     }
 }

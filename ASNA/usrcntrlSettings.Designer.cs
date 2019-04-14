@@ -207,6 +207,7 @@
             this.txtNewFileName.Name = "txtNewFileName";
             this.txtNewFileName.Size = new System.Drawing.Size(278, 20);
             this.txtNewFileName.TabIndex = 11;
+            this.txtNewFileName.TextChanged += new System.EventHandler(this.txtNewFileName_TextChanged);
             // 
             // label3
             // 
