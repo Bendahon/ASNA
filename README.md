@@ -1,6 +1,9 @@
 # ASNA
 Alistair's SSH Network Automator
 
+Update Jan 2020 - Fixing this code is just not something i want to do anymore, it needs a re-write to look good
+
+
 DISCLAIMER:
 When testing the SFTP Download Directory function on a Linux server i did see 50% RAM increase after trying to download a huge directory structure
 USE WITH CAUTION, and i advise test benches first, even after closing the service and PID the usage wouldn't drop, I might novice at best with Linux, so if anyone works out how/why i would love to know!
